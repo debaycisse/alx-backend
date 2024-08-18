@@ -1,5 +1,6 @@
 *.pyc
 *main.py
+*.csv
 venv/
 .venv/
 .env/
