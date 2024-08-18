@@ -27,9 +27,15 @@ def get_next_index(ds: Dict[int, List], index: int, page_size: int) -> int:
     if next_index < total_elements:
         for _ in range(page_size):
             if ds.get(st_index) is None:
-                no_rec += 1
-            st_index += 1
-        return no_rec + next_index
+                while ds.get(st_index) is None:
+                    no_rec += 1
+                    st_index += 1
+            else:
+                st_index += 1
+        next_index = no_rec + next_index
+        if next_index > total_elements:
+            return 0
+        return next_index
     return 0
 
 
