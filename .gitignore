@@ -6,3 +6,4 @@ venv/
 .env/
 .env
 __pycache__/
+base_caching.py
