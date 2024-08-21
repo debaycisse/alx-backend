@@ -15,6 +15,9 @@ class LRUCache(BaseCaching):
     def get_LRU(self):
         """
         Obtains the least frequently used data from the cache
+
+        Args:
+            the key of the first item that has a least recently used value
         """
         lru = None
 
@@ -36,23 +39,21 @@ class LRUCache(BaseCaching):
             key - this is mapped with a given item and stored in the cache
             item - the value to mapped with a given key in the cache
         """
-        if (key is not None) and (item is not None):
-            if (len(self.cache_data) >= BaseCaching.MAX_ITEMS and
-               self.cache_data.get(key) is None):
-                lru = self.get_LRU()
-                self.cache_data.pop(lru)
-                self.data_frequencies.pop(lru)
-
-                for df in self.data_frequencies:
+        if key is None or item is None:
+            return
+        if self.cache_data.get(key):
+            self.data_frequencies.pop(key)
+            self.cache_data.pop(key)
+        self.cache_data.update({key: item})
+        self.data_frequencies.update({key: 1})
+        if len(self.cache_data) > BaseCaching.MAX_ITEMS:
+            lru = self.get_LRU()
+            self.cache_data.pop(lru)
+            self.data_frequencies.pop(lru)
+            print('DISCARD: {0}'.format(lru))
+            for df in self.data_frequencies:
+                if df != key:
                     self.data_frequencies[df] -= 1
-
-                print('DISCARD: {0}'.format(lru))
-
-            elif (self.cache_data.get(key) is not None):
-                self.data_frequencies.pop(key)
-                self.cache_data.pop(key)
-            self.cache_data.update({key: item})
-            self.data_frequencies.update({key: 1})
 
     def get(self, key):
         """Retrieves data whose key is given from the cache
