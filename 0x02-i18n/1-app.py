@@ -6,12 +6,13 @@ from flask import (
     render_template
 )
 from flask_babel import Babel   # type: ignore
+from typing import List
 
 
 class Config:
     """Configures a babel's to support multiple languages"""
-    LANGUAGES = ["en", "fr"]
-    BABEL_DEFAULT_TIMEZONE = 'UTC'
+    LANGUAGES: List[str] = ["en", "fr"]
+    BABEL_DEFAULT_TIMEZONE: str = 'UTC'
 
 
 app: Flask = Flask(__name__)
