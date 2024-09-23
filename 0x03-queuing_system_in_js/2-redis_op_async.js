@@ -1,7 +1,7 @@
-import { createClient, print } from 'redis';
-const util = require('util');
+import redis from 'redis';
 
-const client = createClient();
+const client = redis.createClient()
+const util = require('util');
 
 client.on('error', (err) => {
   console.log('Redis client not connected to the server:', err.message);
@@ -12,10 +12,7 @@ client.on('connect', () => {
 });
 
 function setNewSchool(schoolName, value) {
-  client.set(schoolName, value, (error, res) => {
-    if (error) throw new Error(error.message);
-    print(res);
-  });
+  client.set(schoolName, value, redis.print);
 };
 
 async function displaySchoolValue(schoolName) {
