@@ -13,7 +13,7 @@ client.on('connect', () => {
 function setNewSchool(schoolName, value) {
   client.set(schoolName, value, (error, res) => {
     if (error) throw new Error(error.message);
-    print(`Reply: ${res}`);
+    print(res);
   });
 };
 
