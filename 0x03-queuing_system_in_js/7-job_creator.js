@@ -49,6 +49,18 @@ const jobs = [
 
 const push_notification_code_2 = kue.createQueue();
 
+push_notification_code_2.on('job complete', (id, result) => {
+  console.log(`Notification job ${id} completed`);
+});
+
+push_notification_code_2.on('job failed', (id, error) => {
+  if (error) console.log(`Notification job ${id} failed: ${error}`);
+});
+
+push_notification_code_2.on('job progress', (id, progress) => {
+  console.log(`Notification job ${id} ${progress}% complete`);
+});
+  
 for (let i = 0; i < jobs.length; i += 1) {
   const job = push_notification_code_2.create(
     'push notification',
@@ -58,17 +70,3 @@ for (let i = 0; i < jobs.length; i += 1) {
       if (!error) console.log(`Notification job created: ${job.id}`);
     });
 };
-
-push_notification_code_2.on('job complete', (id, result) => {
-  console.log(`Notification job ${id} completed`);
-});
-
-push_notification_code_2.on('job failed', (id) => {
-  kue.Job.get(id, (error, job) => {
-    if (error) console.log(`Notification job JOB_ID failed: ${job._error}`);
-  });
-});
-
-push_notification_code_2.on('job progress', (id, progress) => {
-  console.log(`Notification job ${id} ${progress}% complete`);
-});
