@@ -5,17 +5,17 @@ const jobData = {
   message: 'Holberton Student #1 course code',
 };
 
-const push_notification_code = kue.createQueue();
+const queue = kue.createQueue();
 
-const job = push_notification_code.create('push notification', jobData)
+const job = queue.create('push_notification_code', jobData)
   .save((error) => {
     if (!error) console.log(`Notification job created: ${job.id}`);
   });
 
-push_notification_code.on('job failed', (id, result) => {
+queue.on('job failed', (id, result) => {
   console.log('Notification job failed');
 });
 
-push_notification_code.on('job complete', (id, result) => {
+queue.on('job complete', (id, result) => {
   console.log('Notification job completed');
 });

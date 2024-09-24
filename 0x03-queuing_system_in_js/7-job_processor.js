@@ -1,7 +1,7 @@
 const kue = require('kue');
 
 const blackListed = ['4153518780', '4153518781'];
-const push_notification_code_2 = kue.createQueue()
+const queue = kue.createQueue()
 
 function sendNotification(phoneNumber, message, job, done) {
   const prg = 100;
@@ -18,7 +18,7 @@ function sendNotification(phoneNumber, message, job, done) {
   }
 };
 
-push_notification_code_2.process('push notification', 2, (job, done) => {
+queue.process('push_notification_code_2', 2, (job, done) => {
   const { phoneNumber, message } = job.data;
   sendNotification(phoneNumber, message, job, done);
 });
