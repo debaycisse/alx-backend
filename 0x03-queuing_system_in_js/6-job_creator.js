@@ -1,8 +1,8 @@
 const kue = require('kue');
 
 const jobData = {
-  phoneNumber: '08179776939',
-  message: 'Holberton Student #1 course start',
+  phoneNumber: '005868868',
+  message: 'Holberton Student #1 course code',
 };
 
 const push_notification_code = kue.createQueue();
