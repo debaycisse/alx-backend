@@ -15,10 +15,12 @@ module.exports = function createPushNotificationsJobs(jobs, queue) {
     console.log(`Notification job ${id} ${progress}% complete`);
   });
 
+  queue.on('job enqueue', (id, result) => {
+    console.log(`Notification job created: ${id}`);
+  });
+
   for(let i = 0; i < jobs.length; i += 1) {
-    const job = queue.create('push_notification_code_3', jobs[i])
-      .save((error) => {
-        if (!error) console.log(`Notification job created: ${job.id}`);
-      });
+    const job = queue.create('push_notification_code_3', jobs[i]);
+    job.save();
   }
 };
